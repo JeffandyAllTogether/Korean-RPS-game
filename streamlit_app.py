@@ -55,6 +55,7 @@ st.markdown("---")
 score_placeholder = st.empty()
 result_placeholder = st.empty()
 streak_placeholder = st.empty()
+hands_placeholder = st.empty()
 
 st.markdown("---")
 
@@ -130,6 +131,19 @@ if play_button:
     else:
         streak_placeholder.empty()
     
+    # Display ASCII art hands using a container inside the placeholder
+    with hands_placeholder.container():
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("### You chose:")
+            st.code(art[choice], language=None)
+            st.caption(names[choice])
+        
+        with col2:
+            st.markdown("### CPU chose:")
+            st.code(art[cpu], language=None)
+            st.caption(names[cpu])
     
     st.markdown("---")
     
@@ -145,4 +159,10 @@ if play_button:
     #     st.error("## 💀 당신이 졌어요... YOU LOSE!")
 
 st.markdown("---")
+
+# Stats footer
+if st.session_state.games_played > 0:
+    win_rate = (st.session_state.player_score / st.session_state.games_played) * 100
+    st.caption(f"Games played: {st.session_state.games_played} | Win rate: {win_rate:.1f}%")
+
 st.caption("Built by Jeffandy | Day 4 of 100 Days to Hireable")
